@@ -8,6 +8,9 @@ export default NextAuth({
   session: {
     strategy: 'jwt',
   },
+  
+  secret: process.env.SECRET,
+
   providers: [
     CredentialsProvider({
       async authorize(credentials, req) {
@@ -46,5 +49,5 @@ export default NextAuth({
       return session;
     },
   },
-  secret: process.env.SECRET
+  
 });
