@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
+
 
 export default function Catalog() {
   const [products, setProducts] = useState([]);
@@ -58,7 +60,9 @@ export default function Catalog() {
                 <img src={product.images[0]} alt={product.title} className="w-full h-full" />
               )}
               <div className="p-4 absolute bottom-0 left-0 right-0 bg-white">
+              <Link href={`/components/${product._id}`}>
                 <h2 className="text-red-600 text-xl font-semibold mb-2">{product.title}</h2>
+              </Link>
                 <p className="text-gray-600 mb-4">{product.description}</p>
                 <p className="text-gray-800 font-semibold mb-4">Price: Rp{product.price}</p>
                 <div className="mt-4">
