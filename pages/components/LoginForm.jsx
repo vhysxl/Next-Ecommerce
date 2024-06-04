@@ -24,7 +24,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="grid place-items-center min-h-screen bg-gray-100 p-5">
+    <div className="grid place-items-baseline pt-20 min-h-screen  bg-gray-100 p-5">
     <div className="grid gap-5 max-w-md w-full">
       <label className="text-2xl md:text-4xl pb-3 text-black text-center">Login</label>
       <form onSubmit={handleSubmit} className="grid gap-7">
