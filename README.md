@@ -1,16 +1,14 @@
 This is My project Ecommerce project with nextjs and MongoDB, this Ecommerce Sells Constuction Accessories, This project is still on development
-
 you can preview the app here:
 https://penelitian-ilmiah-deploy.vercel.app/
+
 ---
 
 ## IMPORTANT
----
 1. You need an admin panel to manage products, as this application only shows products, handles login, and processes orders.
 2. You can modify the db models on models/
 
 ## Getting Started
----
 
 ### 1. Install Packages
 
