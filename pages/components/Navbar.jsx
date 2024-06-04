@@ -46,7 +46,7 @@ export default function Navbar() {
                 <ul className="hidden md:flex pr-20 mx-auto text-center font-semibold font-heading space-x-12">
                   <li><Link className="hover:text-gray-200" href="/">Home</Link></li>
                   <li><a className="hover:text-gray-200" href="#">Category</a></li>
-                  <li><Link className="hover:text-gray-200" href="/Product">Collections</Link></li>
+                  <li><Link className="hover:text-gray-200" href="/Product">Products</Link></li>
                   <li><a className="hover:text-gray-200 " href="#">Contact Us</a></li>
                 </ul>
                 <div className="hidden xl:flex lg:flex md:flex items-center space-x-5">
@@ -92,7 +92,7 @@ export default function Navbar() {
               <div className="xl:hidden  flex flex-col items-center bg-gray-900 text-white w-full py-4">
                 <Link className="hover:text-gray-200 py-2" href="/">Home</Link>
                 <a className="hover:text-gray-200 py-2" href="#">Category</a>
-                <Link className="hover:text-gray-200 py-2" href="/Product">Collections</Link>
+                <Link className="hover:text-gray-200 py-2" href="/Product">Products</Link>
                 <a className="hover:text-gray-200 py-2" href="#">Contact Us</a>
               </div>
             )}
@@ -133,7 +133,7 @@ export default function Navbar() {
             <ul className="hidden md:flex pr-20 mx-auto text-center font-semibold font-heading space-x-12">
               <li><Link className="hover:text-gray-200" href="/">Home</Link></li>
               <li><a className="hover:text-gray-200" href="#">Category</a></li>
-              <li><Link className="hover:text-gray-200" href="/Product">Collections</Link></li>
+              <li><Link className="hover:text-gray-200" href="/Product">Products</Link></li>
               <li><a className="hover:text-gray-200 " href="#">Contact Us</a></li>
             </ul>
             <div className="hidden xl:flex lg:flex md:flex items-center space-x-5">
@@ -179,7 +179,7 @@ export default function Navbar() {
           <div className="xl:hidden  flex flex-col items-center bg-gray-900 text-white w-full py-4">
             <Link className="hover:text-gray-200 py-2" href="/">Home</Link>
             <a className="hover:text-gray-200 py-2" href="#">Category</a>
-            <Link className="hover:text-gray-200 py-2" href="/Product">Collections</Link>
+            <Link className="hover:text-gray-200 py-2" href="/Product">Products</Link>
             <a className="hover:text-gray-200 py-2" href="#">Contact Us</a>
           </div>
         )}

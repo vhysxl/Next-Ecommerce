@@ -11,31 +11,28 @@ export default function Home() {
 
   if (!session) {
     return (
-      <div className="bg-white min-h-screen">
+      <div className="bg-white min-h-screen flex flex-col">
         <header>
-          <Navbar/>
+          <Navbar />
         </header>
-        <div className="flex flex-col items-center justify-center h-screen font-bold text-black text-4xl">
+        <div className="flex flex-col items-center justify-center flex-grow font-bold text-black text-4xl">
           You need to login
         </div>
       </div>
-      
-      
-    )
+    );
   }
 
   const { user } = session;
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen flex flex-col">
       <header>
-        <Navbar/>
+        <Navbar />
       </header>
-      <div className="flex flex-col h-screen text-black">
+      <div className="flex flex-col flex-grow text-black">
         <p className="pl-2 pt-2">Selamat Datang {user.name}</p>
         {/* <button onClick={handleSignOut}>Sign Out</button> */}
+      </div>
     </div>
-    </div>
-    
   );
 }
