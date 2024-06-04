@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 
 export default function Catalog() {
@@ -57,7 +58,12 @@ export default function Catalog() {
             {products.map((product) => (
               <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden relative">
               {product.images && product.images.length > 0 && (
-                <img src={product.images[0]} alt={product.title} className="w-full h-full" />
+                <Image 
+                  src={product.images[0]} 
+                  alt={product.title}
+                  width={500}
+                  height={500}
+                  className="w-full h-full" />
               )}
               <div className="p-4 absolute bottom-0 left-0 right-0 bg-white">
               <Link href={`/components/${product._id}`}>
