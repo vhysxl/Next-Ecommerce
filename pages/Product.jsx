@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Catalog from "./components/Catalog";
+import Footer from "./components/Footer";
 
 export default function Product() {
   return (
@@ -10,6 +11,9 @@ export default function Product() {
     <div className="bg-gray-100 p-4">
       <Catalog/>    
     </div>
+    <footer>
+      <Footer/>
+    </footer>
     </>
   );
 }

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
 
 export default function Home() {
   const handleSignOut = () => {
@@ -15,9 +17,10 @@ export default function Home() {
         <header>
           <Navbar />
         </header>
-        <div className="flex flex-col items-center justify-center flex-grow font-bold text-black text-4xl">
-          You need to login
-        </div>
+          <Hero/>
+        <footer className="w-screen bg-black">
+          <Footer/>
+        </footer>
       </div>
     );
   }
@@ -25,7 +28,7 @@ export default function Home() {
   const { user } = session;
 
   return (
-    <div className="bg-white min-h-screen flex flex-col">
+    <div className="bg-white min-h-screen flex flex-col ">
       <header>
         <Navbar />
       </header>
@@ -33,6 +36,10 @@ export default function Home() {
         <p className="pl-2 pt-2">Selamat Datang {user.name}</p>
         {/* <button onClick={handleSignOut}>Sign Out</button> */}
       </div>
+      <footer className="w-screen bg-black">
+          <Footer/>
+      </footer>
+      
     </div>
   );
 }

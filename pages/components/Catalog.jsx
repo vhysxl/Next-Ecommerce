@@ -54,7 +54,7 @@ export default function Catalog() {
           <div className="bg-black w-fit p-3 mt-4 mb-2 pt-2">
             <h2 className="text-3xl font-semibold m-4 text-white">{category}</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-10">
             {products.map((product) => (
               <div key={product._id} className="bg-white shadow-md rounded-lg">
                 {product.images && product.images.length > 0 && (

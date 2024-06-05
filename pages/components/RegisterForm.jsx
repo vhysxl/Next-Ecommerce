@@ -52,7 +52,7 @@ export default function RegisterForm(){
 
       return (
         <div className="grid place-items-baseline justify-items-center pt-20 min-h-screen bg-gray-100 p-5 sm:pb-19">
-          <div className="grid gap-5 max-w-md w-full">
+          <div className="grid gap-5 max-w-md w-4/5">
             <label className="text-2xl sm:text-3xl md:text-4xl pb-3 text-black text-center">Register</label>
             <form onSubmit={handleSubmit} className="grid gap-7">
               <input 
