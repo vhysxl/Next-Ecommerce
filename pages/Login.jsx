@@ -4,8 +4,10 @@ import Navbar from "./components/Navbar"
 export default function Login(){
     return(
         <>
-        <Navbar/>
-        <LoginForm/>
+        <header className="sticky top-0 overflow-x-hidden overflow-y-hidden">
+            <Navbar/>
+        </header>
+            <LoginForm/>
         </>
         
     )

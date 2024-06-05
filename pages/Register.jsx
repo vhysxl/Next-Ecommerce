@@ -4,8 +4,10 @@ import RegisterForm from "./components/RegisterForm";
 export default function Register(){
     return(
         <>
-        <Navbar/>
-         <RegisterForm/>
+        <header className="sticky top-0 overflow-x-hidden overflow-y-hidden">
+            <Navbar/>
+        </header>
+        <RegisterForm/>
         </>
        
     )
