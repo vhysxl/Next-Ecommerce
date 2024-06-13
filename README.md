@@ -79,5 +79,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Special Thanks
 
--ChatGPT
--Claude
+- ChatGPT [https://chatgpt.com/]
+- Claude  [https://claude.ai/]
