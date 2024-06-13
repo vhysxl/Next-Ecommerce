@@ -25,21 +25,13 @@ export default function Home() {
     );
   }
 
-  const { user } = session;
-
   return (
-    <div className="bg-white min-h-screen flex flex-col ">
-      <header>
-        <Navbar />
-      </header>
-      <div className="flex flex-col flex-grow text-black">
-        <p className="pl-2 pt-2">Selamat Datang {user.name}</p>
-        {/* <button onClick={handleSignOut}>Sign Out</button> */}
-      </div>
-      <footer className="w-screen bg-black">
-          <Footer/>
-      </footer>
-      
+    <div className="z-100">
+      <Navbar/>
+        <Hero />
+      <Footer/>
     </div>
+      
+      
   );
 }

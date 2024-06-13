@@ -1,8 +1,3 @@
-export default function Header(){
-
-    return(
-        <div>lmao</div>
-    )
-
-    
+export default function Header() {
+  return <div>lmao</div>;
 }
