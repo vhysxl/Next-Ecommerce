@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
-import mongoose from "mongoose";
 
 export default function Myorder() {
   const { data: session, status } = useSession();
@@ -9,6 +8,7 @@ export default function Myorder() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -25,7 +25,7 @@ export default function Myorder() {
             setError(data.error);
           }
         } catch (error) {
-          console.error("error");
+          setError("Failed to fetch orders");
         } finally {
           setIsLoading(false);
         }
@@ -37,10 +37,26 @@ export default function Myorder() {
     fetchOrders();
   }, [session, status]);
 
-  
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsRes = await fetch("/api/product");
+        if (!productsRes.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const productsData = await productsRes.json();
+        setProducts(productsData);
+        setProductsLoaded(true); // Set productsLoaded to true when products are fetched
+      } catch (error) {
+        setError("Error fetching products");
+      }
+    };
 
-  if (isLoading) {
-    return <div>loading...</div>;
+    fetchProducts();
+  }, []);
+
+  if (isLoading || !productsLoaded) {
+    return <div>Loading...</div>; // Display loading message until both orders and products are loaded
   }
 
   if (error) {
