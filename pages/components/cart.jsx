@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function CartPage() {
+export default function CheckoutPage() {
   const { data: session, status } = useSession();
   const [cart, setCart] = useState(null);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState({});
+  const [shippingAddress, setShippingAddress] = useState({
+    name: "",
+    address: "",
+  });
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -70,19 +75,103 @@ export default function CartPage() {
     }
   }, [cart, products]);
 
-  const handleQuantityChange = (itemIndex, newQuantity) => {
-    if (cart) {
-      const updatedItems = [...cart.items];
-      updatedItems[itemIndex].quantity = newQuantity;
-      setCart({ ...cart, items: updatedItems });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setShippingAddress((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleQuantityChange = (index, quantity) => {
+    if (quantity < 1) return;
+
+    const updatedCart = { ...cart };
+    updatedCart.items[index].quantity = quantity;
+
+    setCart(updatedCart);
+
+    const calculateTotalPrice = () => {
+      const total = updatedCart.items.reduce((acc, item) => {
+        const product = products.find((p) => p._id === item.product);
+        return acc + (product ? product.price * item.quantity : 0);
+      }, 0);
+      setTotalPrice(total);
+    };
+
+    calculateTotalPrice();
+  };
+
+  const handleRemoveProduct = async (index) => {
+    if (!session) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          consumentId: session.user._id,
+          productId: cart.items[index].product,
+          action: "remove",
+        }),
+      });
+
+      if (response.ok) {
+        const updatedCart = await response.json();
+        setCart(updatedCart);
+        const calculateTotalPrice = () => {
+          const total = updatedCart.items.reduce((acc, item) => {
+            const product = products.find((p) => p._id === item.product);
+            return acc + (product ? product.price * item.quantity : 0);
+          }, 0);
+          setTotalPrice(total);
+        };
+        calculateTotalPrice();
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error);
+      }
+    } catch (error) {
+      setError("Failed to remove product from cart");
     }
   };
 
-  const handleRemoveProduct = (itemIndex) => {
-    if (cart) {
-      const updatedItems = [...cart.items];
-      updatedItems.splice(itemIndex, 1);
-      setCart({ ...cart, items: updatedItems });
+  const handlePlaceOrder = async () => {
+    if (!shippingAddress.name || !shippingAddress.address) {
+      alert("Please fill in the shipping address");
+      return;
+    }
+
+    const order = {
+      consumentId: session.user._id,
+      items: cart.items,
+      shippingAddress,
+      totalPrice,
+    };
+
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (response.ok) {
+        // Clear the cart after successful order placement
+        setCart({ ...cart, items: [] });
+        router.push("/");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error);
+      }
+    } catch (error) {
+      setError("Failed to place order");
     }
   };
 
@@ -95,7 +184,7 @@ export default function CartPage() {
   }
 
   if (!session) {
-    return <div>Please log in to view your cart.</div>;
+    return <div>Please log in to proceed to checkout.</div>;
   }
 
   return (
@@ -125,7 +214,7 @@ export default function CartPage() {
                   </div>
                   <span>
                     Quantity:{" "}
-                    <input 
+                    <input
                       type="number"
                       min="1"
                       value={item.quantity}
@@ -151,9 +240,7 @@ export default function CartPage() {
           Total Price: ${totalPrice.toFixed(2)}
         </h2>
         <div>
-          <Link href="/components/Checkout">
-            Checkout
-          </Link>
+          <Link href="/components/Checkout">Checkout</Link>
         </div>
       </div>
     </>

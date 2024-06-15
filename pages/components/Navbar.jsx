@@ -174,7 +174,7 @@ export default function Navbar() {
   const { user } = session;
 
   return (
-    <header className=" bg-black text-white">
+    <header className=" bg-black text-white w-screen">
       <div className="flex flex-wrap place-items-center">
         <section className="relative mx-auto">
           <nav className="flex justify-between w-screen px-5 xl:px-12 py-6 items-center">
@@ -212,10 +212,18 @@ export default function Navbar() {
                   About Us
                 </Link>
               </li>
+              <li>
+                <Link className="hover:text-gray-200" href="/components/myorder">
+                  My Orders
+                </Link>
+              </li>
             </ul>
 
             <div className="hidden xl:flex lg:flex md:flex items-center space-x-5">
-              <p>Selamat Datang <span className="text-red-500 text-lg">{user.name}</span></p>
+              <p>
+                Selamat Datang{" "}
+                <span className="text-red-500 text-lg">{user.name}</span>
+              </p>
               <Link
                 className="flex items-center hover:text-gray-200"
                 href="/components/cart"

@@ -55,8 +55,8 @@ export default function Catalog() {
   }, [cart]);
 
   const cartHandle = async (product) => {
-    console.log(product._id)
-    console.log(session.user._id)
+    console.log(product._id);
+    console.log(session.user._id);
     if (!session || !session.user) {
       console.error("User not authenticated");
       return;
@@ -71,6 +71,7 @@ export default function Catalog() {
         body: JSON.stringify({
           consumentId: session.user._id,
           productId: product._id,
+          action: "add", // Add this line
         }),
       });
 
@@ -89,18 +90,7 @@ export default function Catalog() {
       }
 
       const cartData = await response.json();
-      const updatedCart = [...cart];
-      const existingItemIndex = updatedCart.findIndex(
-        (item) => item.product._id === product._id
-      );
-
-      if (existingItemIndex > -1) {
-        updatedCart[existingItemIndex].quantity += 1;
-      } else {
-        updatedCart.push({ product, quantity: 1 });
-      }
-
-      setCart(updatedCart);
+      setCart(cartData);
     } catch (error) {
       if (error.message.includes("Failed to fetch")) {
         console.error("Network error:", error);

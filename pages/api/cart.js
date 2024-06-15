@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     await mongooseConnect();
 
     if (req.method === "POST") {
-        const { consumentId, productId } = req.body;
+        const { consumentId, productId, action } = req.body;
 
         if (!consumentId || !productId) {
             return res.status(400).json({ error: "Missing consumentId or productId" });
@@ -23,16 +23,23 @@ export default async function handler(req, res) {
             const existingItemIndex = cart.items.findIndex(
                 (item) => item.product.toString() === productId
             );
-            if (existingItemIndex > -1) {
-                cart.items[existingItemIndex].quantity += 1;
-            } else {
-                cart.items.push({ product: new mongoose.Types.ObjectId(productId), quantity: 1 });
+
+            if (action === "add") {
+                if (existingItemIndex > -1) {
+                    cart.items[existingItemIndex].quantity += 1;
+                } else {
+                    cart.items.push({ product: new mongoose.Types.ObjectId(productId), quantity: 1 });
+                }
+            } else if (action === "remove") {
+                if (existingItemIndex > -1) {
+                    cart.items.splice(existingItemIndex, 1);
+                }
             }
 
             await cart.save();
             return res.status(200).json(cart);
         } catch (error) {
-            console.error("Error adding to cart:", error);
+            console.error("Error updating cart:", error);
             return res.status(500).json({ error: "Internal server error" });
         }
     } else if (req.method === "GET") {
