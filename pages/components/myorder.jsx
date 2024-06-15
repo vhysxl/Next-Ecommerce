@@ -9,6 +9,23 @@ export default function Myorder() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsRes = await fetch("/api/product");
+        if (!productsRes.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const productsData = await productsRes.json();
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
     const fetchOrders = async () => {
       if (status === "authenticated") {
         try {
