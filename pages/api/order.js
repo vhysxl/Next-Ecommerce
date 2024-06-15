@@ -1,6 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import Order from "@/models/orders";
 import { Product } from "@/models/product";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
     await mongooseConnect();
@@ -26,7 +27,7 @@ export default async function handler(req, res) {
             console.error("Error creating order:", error);
             return res.status(500).json({ error: "Internal server error" });
         }
-    } else if (req.method === "GET") {
+    } else if (req.method === 'GET') {
         const { consumentId } = req.query;
 
         if (!consumentId) {
@@ -34,16 +35,15 @@ export default async function handler(req, res) {
         }
 
         try {
-            const orders = await Order.find({ consumentId }).populate('items.product');
-
+            const orders = await Order.find({ consumentId });
             if (!orders || orders.length === 0) {
-                return res.status(404).json({ error: "No orders found" });
+                return res.status(404).json({ error: "This user doesn't have any orders" });
             }
 
             return res.status(200).json(orders);
         } catch (error) {
-            console.error("Error fetching orders:", error);
-            return res.status(500).json({ error: "Internal server error" });
+            console.error("An error occurred: ", error);
+            return res.status(500).json({ error: "An error occurred" });
         }
     } else {
         return res.status(405).json({ error: "Method not allowed" });

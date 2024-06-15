@@ -1,4 +1,4 @@
-import mongoose, { models } from 'mongoose';
+import mongoose, { models, model, Schema } from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
     consumentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Consument', required: true },
