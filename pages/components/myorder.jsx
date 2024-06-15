@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 
-export default function myorder() {
+export default function Myorder() {
   const { data: session, status } = useSession();
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

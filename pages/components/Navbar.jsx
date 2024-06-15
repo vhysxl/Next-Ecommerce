@@ -11,8 +11,6 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   };
 
-  
-
   if (!session) {
     return (
       <header className=" bg-black text-white">
@@ -213,7 +211,10 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-gray-200" href="/components/myorder">
+                <Link
+                  className="hover:text-gray-200"
+                  href="/components/Myorder"
+                >
                   My Orders
                 </Link>
               </li>
