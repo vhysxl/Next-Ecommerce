@@ -213,7 +213,7 @@ export default function Navbar() {
               <li>
                 <Link
                   className="hover:text-gray-200"
-                  href="/components/Myorder"
+                  href="/components/order"
                 >
                   My Orders
                 </Link>

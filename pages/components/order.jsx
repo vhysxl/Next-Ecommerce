@@ -37,22 +37,7 @@ export default function Myorder() {
     fetchOrders();
   }, [session, status]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productRes = await fetch("/api/product"); // Correct API route
-        if (!productRes.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const productData = await productRes.json();
-        setProducts(productData);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  
 
   if (isLoading) {
     return <div>loading...</div>;
