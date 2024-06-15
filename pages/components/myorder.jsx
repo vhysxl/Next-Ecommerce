@@ -11,31 +11,21 @@ export default function Myorder() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      if (status === "authenticated") {
-        try {
-          const response = await fetch(
-            `/api/order?consumentId=${session.user._id}`
-          );
-          const data = await response.json();
-
-          if (response.ok) {
-            setOrders(data);
-          } else {
-            setError(data.error);
-          }
-        } catch (error) {
-          console.error("error");
-        } finally {
-          setIsLoading(false);
+    const fetchProducts = async () => {
+      try {
+        const productRes = await fetch("/api/product");
+        if (!productRes.ok) {
+          throw new Error("failed to fetch product");
         }
-      } else {
-        setIsLoading(false);
+        const productData = await productRes.json();
+        setProducts(productData);
+      } catch (error) {
+        console.error("Error fetching products:", error); // Log the actual error
       }
     };
 
-    fetchOrders();
-  }, [session, status]);
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,7 +45,7 @@ export default function Myorder() {
   }, []);
 
   if (isLoading) {
-    return <div>loading...</div>;
+    return <div>Shut the fuck up!!</div>;
   }
 
   if (error) {
