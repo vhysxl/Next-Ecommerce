@@ -1,11 +1,14 @@
-import { Product } from "@/models/product";
+import { mongooseConnect } from "@/lib/mongoose"; // Ensure you are importing and using your MongoDB connection utility
+import Product from "@/models/product"; // Ensure the Product model is correctly imported
 
 export default async function handler(req, res) {
   const method = req.method;
 
+  await mongooseConnect(); // Ensure MongoDB is connected
+
   if (method === "GET") {
     try {
-      if (req.query?.id) {
+      if (req.query.id) {
         const product = await Product.findById(req.query.id);
         if (product) {
           res.status(200).json(product);
