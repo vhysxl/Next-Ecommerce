@@ -1,6 +1,6 @@
 This is My project Ecommerce project with nextjs and MongoDB, this Ecommerce Sells Constuction Accessories, This project is still on development
 you can preview the app here:
-https://penelitian-ilmiah-deploy.vercel.app/
+[Check the web here](https://penelitian-ilmiah.vercel.app/)
 
 ---
 
