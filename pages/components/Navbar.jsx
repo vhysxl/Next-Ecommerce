@@ -47,7 +47,7 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-gray-200" href="/AboutUs">
+                  <Link className="hover:text-gray-200" href="/Aboutus">
                     About Us
                   </Link>
                 </li>
@@ -55,7 +55,7 @@ export default function Navbar() {
               <div className="hidden xl:flex lg:flex md:flex items-center space-x-5">
                 <Link
                   className="flex items-center hover:text-gray-200"
-                  href="/cart"
+                  href="/components/cart"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,10 @@ export default function Navbar() {
                 </Link>
               </div>
               <div className="xl:hidden lg:hidden md:hidden flex items-center">
-                <Link className="mr-6 hover:text-gray-200" href="/Cart">
+                <Link
+                  className="mr-6 hover:text-gray-200"
+                  href="/components/cart"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -158,7 +161,7 @@ export default function Navbar() {
                 <Link className="hover:text-gray-200 py-2" href="/Product">
                   Products
                 </Link>
-                <Link className="hover:text-gray-200 py-2" href="/AboutUs">
+                <Link className="hover:text-gray-200 py-2" href="/Aboutus">
                   About Us
                 </Link>
               </div>
@@ -206,15 +209,12 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-gray-200" href="/AboutUs">
+                <Link className="hover:text-gray-200" href="/Aboutus">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link
-                  className="hover:text-gray-200"
-                  href="/components/order"
-                >
+                <Link className="hover:text-gray-200" href="/components/order">
                   My Orders
                 </Link>
               </li>
@@ -222,7 +222,6 @@ export default function Navbar() {
 
             <div className="hidden xl:flex lg:flex md:flex items-center space-x-5">
               <p>
-                Selamat Datang{" "}
                 <span className="text-red-500 text-lg">{user.name}</span>
               </p>
               <Link
@@ -265,7 +264,10 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="xl:hidden lg:hidden md:hidden flex items-center">
-              <Link className="mr-6 hover:text-gray-200" href="/Cart">
+              <Link
+                className="mr-6 hover:text-gray-200"
+                href="/components/cart"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -330,8 +332,11 @@ export default function Navbar() {
               <Link className="hover:text-gray-200 py-2" href="/Product">
                 Products
               </Link>
-              <Link className="hover:text-gray-200 py-2" href="/AboutUs">
+              <Link className="hover:text-gray-200 py-2" href="/Aboutus">
                 About Us
+              </Link>
+              <Link className="hover:text-gray-200 py-2" href="/components/order">
+                My Orders
               </Link>
             </div>
           )}

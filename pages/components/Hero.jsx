@@ -8,20 +8,21 @@ export default function Hero() {
           <h2 className="text-3xl font-semibold text-black lg:text-4xl">
             Toko Accessories <span className="text-red-600">Terpercaya</span>
           </h2>
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 lg:text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis
-            commodi cum cupiditate ducimus, fugit harum id necessitatibus odio
-            quam quasi, quibusdam rem tempora voluptates.
+          <p className="mt-4 text-sm text-neutral-600 lg:text-base">
+            Sejak tahun 2020, kami telah dipercaya sebagai penjual berbagai
+            macam aksesori untuk pembuatan folding gate dan rolling door.
+            Produk-produk kami diambil langsung dari distributor terpercaya
+            untuk menjamin kualitas terbaik bagi Anda.
           </p>
           <div className="flex flex-col mt-6 space-y-3 lg:space-y-0 lg:flex-row -z-40">
             <Link
-              href="/AboutUs"
+              href="/Product"
               className="block px-5 py-2 text-sm font-medium tracking-wider text-center text-white transition-colors duration-300 transform bg-gray-900 rounded-md hover:bg-gray-700"
             >
-              Belanja Sekarang
+              Produk Kami
             </Link>
             <Link
-              href="/Product"
+              href="/Aboutus"
               className="block px-5 py-2 text-sm font-medium tracking-wider text-center text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md lg:mx-4 hover:bg-gray-300"
             >
               Tentang Kami

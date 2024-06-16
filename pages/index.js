@@ -26,7 +26,7 @@ export default function Home() {
   }
 
   return (
-    <div className="z-100">
+    <div className="z-100 overflow-hidden">
       <Navbar/>
         <Hero />
       <Footer/>
