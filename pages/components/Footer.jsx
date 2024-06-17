@@ -4,34 +4,25 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 bg-black">
-      <div className="grid row-gap-6 mb-8 sm:grid-cols-2 md:grid-cols-2 gap-3 lg:grid-cols-4">
-        <div className="sm:col-span-2">
+      <div className="grid row-gap-6 mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 flex flex-row items-center mb-6 lg:mb-0">
           <Link
             href="/"
             aria-label="Go home"
             title="Usaha Baru"
-            className="inline-flex items-center"
+            className="inline-flex items-center mx-auto"
           >
             <Image
               src="/logo.svg"
               alt="Vercel Logo"
               className="dark:invert"
-              width={50}
+              width={70}
               height={50}
-              priority
             />
-            <span className="ml-2 text-xl font-bold tracking-wide text-white uppercase">
+            <span className="ml-4 text-3xl font-bold tracking-wide text-white uppercase">
               Usaha Baru
             </span>
           </Link>
-          <div className="mt-6 lg:max-w-sm">
-            <p className="text-sm text-white">
-              Usaha Baru adalah perusahaan konstruksi yang bergearak pada
-              pembuatan pintu Rolling Door, Folding Gate, Pintu Lipat, dan
-              produk sejenis lainnya. Kami menjual beragam aksesori yang
-              dibutuhkan untuk pembuatan pintu-pintu tersebut.
-            </p>
-          </div>
         </div>
         <div className="space-y-3 text-sm">
           <p className="text-base font-bold tracking-wide text-gray-300">
@@ -60,7 +51,7 @@ export default function Footer() {
             </Link>
           </div>
           <div className="flex">
-            <p className="mr-1 text-gray-300">Address:</p>
+            <p className="mr-1 text-gray-300">Alamat: </p>
             <Link
               href="https://www.google.com/maps"
               target="_blank"
@@ -73,7 +64,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <div>
+        <div className="mt-4">
           <span className="text-base font-bold tracking-wide text-gray-300">
             Social
           </span>

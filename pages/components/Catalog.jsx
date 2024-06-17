@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Catalog() {
   const { data: session } = useSession();
@@ -10,6 +11,8 @@ export default function Catalog() {
   const [categories, setCategories] = useState({});
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
 
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
@@ -58,6 +61,7 @@ export default function Catalog() {
   }, [cart]);
 
   const cartHandle = async (product) => {
+    router.refresh();
     console.log(product._id);
     console.log(session.user._id);
     if (!session || !session.user) {

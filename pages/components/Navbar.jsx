@@ -1,11 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const [cart, setCart] = useState(null);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (status === "authenticated") {
+        try {
+          const response = await fetch(
+            `/api/cart?consumentId=${session.user._id}`
+          );
+          const data = await response.json();
+          if (response.ok) {
+            setCart(data);
+          } else {
+            console.log(data.error);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchCart();
+  }, [status, session, ]);
+
+  useEffect(() => {
+    if (cart && cart.items) {
+      const newTotalQuantity = cart.items.reduce(
+        (acc, item) => acc + item.quantity,
+        0
+      );
+
+      if (newTotalQuantity !== totalQuantity) {
+        setTotalQuantity(newTotalQuantity);
+      }
+    }
+  }, [cart]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -242,6 +281,7 @@ export default function Navbar() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
+                <p>({totalQuantity})</p>
               </Link>
               <Link
                 className="flex items-center hover:text-gray-200"
@@ -264,6 +304,9 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="xl:hidden lg:hidden md:hidden flex items-center">
+              <span className="mx-3 text-red-600">
+                <p>{session.user.name}</p>
+              </span>
               <Link
                 className="mr-6 hover:text-gray-200"
                 href="/components/cart"
@@ -335,7 +378,10 @@ export default function Navbar() {
               <Link className="hover:text-gray-200 py-2" href="/Aboutus">
                 About Us
               </Link>
-              <Link className="hover:text-gray-200 py-2" href="/components/order">
+              <Link
+                className="hover:text-gray-200 py-2"
+                href="/components/order"
+              >
                 My Orders
               </Link>
             </div>
