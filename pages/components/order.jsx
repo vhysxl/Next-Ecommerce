@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function Myorder() {
   const { data: session, status } = useSession();
@@ -68,9 +69,9 @@ export default function Myorder() {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <Navbar />
-      <div className="container mx-auto py-8 text-black over">
+      <div className="container mx-auto py-8  text-black over">
         <h1 className="text-2xl font-bold mb-4">My Orders</h1>
         {orders.length === 0 && <p>You have no orders.</p>}
         {orders.length > 0 && (
@@ -78,7 +79,7 @@ export default function Myorder() {
             {orders.map((order) => (
               <li
                 key={order._id}
-                className="bg-white shadow-md rounded-md p-4 mb-4"
+                className="bg-white shadow-md rounded-md p-4 mb-4 border-2"
               >
                 <h2 className="text-xl font-bold mb-2">Order #{order._id}</h2>
                 <p className="mb-2">
@@ -115,7 +116,9 @@ export default function Myorder() {
                           <span className="mr-2">
                             Quantity: {item.quantity}
                           </span>
-                          <span>Price: Rp{product ? product.price : "N/A"}</span>
+                          <span>
+                            Price: Rp{product ? product.price : "N/A"}
+                          </span>
                         </div>
                       </li>
                     );
@@ -130,6 +133,10 @@ export default function Myorder() {
           </ul>
         )}
       </div>
+      <div className="bg-black">
+        <Footer />
+      </div>
+      
     </div>
   );
 }

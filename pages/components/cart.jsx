@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Footer from "./Footer";
 
 export default function CheckoutPage() {
   const { data: session, status } = useSession();
@@ -176,7 +177,22 @@ export default function CheckoutPage() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center p-12 text-black text-2xl text-center bg-white">
+        <div>
+          <h1>Memuat Order</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            className="mx-auto mt-4 animate-spin" // Center the SVG and add some margin-top
+          >
+            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm8 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-19 0c0-6.065 4.935-11 11-11v2c-4.962 0-9 4.038-9 9 0 2.481 1.009 4.731 2.639 6.361l-1.414 1.414.015.014c-2-1.994-3.24-4.749-3.24-7.789z" />
+          </svg>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -189,10 +205,13 @@ export default function CheckoutPage() {
 
   return (
     <>
+    <div className="overflow-hidden">
       <Navbar />
-      <div className="p-5 font-sans w-3/4">
+    </div>
+      
+      <div className="p-5 font-sans bg-white text-black">
         <h1 className="text-2xl mb-5">Cart</h1>
-        {cart && cart.items.length === 0 && <p>Your cart is empty.</p>}
+        {cart && cart.items.length === 0 && <p>Cart anda kosong</p>}
         {cart && cart.items.length > 0 && (
           <ul className="list-none">
             {cart.items.map((item, index) => {
@@ -200,9 +219,9 @@ export default function CheckoutPage() {
               return (
                 <li
                   key={index}
-                  className="py-2 border-b border-gray-200 flex justify-between items-center"
+                  className="py-4 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center mb-2 sm:mb-0 sm:w-1/3">
                     {product && product.images && product.images.length > 0 && (
                       <img
                         src={product.images[0]}
@@ -210,10 +229,12 @@ export default function CheckoutPage() {
                         className="w-12 h-12 mr-4"
                       />
                     )}
-                    <span>Product: {product ? product.title : "Unknown"}</span>
+                    <span className="truncate">
+                      {product ? product.title : "Unknown"}
+                    </span>
                   </div>
-                  <span>
-                    Quantity:{" "}
+                  <div className="flex items-center mb-2 sm:mb-0 sm:w-1/3 sm:justify-center">
+                    <span className="mr-2">Quantity:</span>
                     <input
                       type="number"
                       min="1"
@@ -221,28 +242,53 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         handleQuantityChange(index, parseInt(e.target.value))
                       }
-                      className="w-12 mx-2 text-center text-black"
+                      className="w-16 text-center text-black border rounded p-1"
                     />
-                  </span>
-                  <span>Price: ${product ? product.price : "N/A"}</span>
-                  <button
-                    onClick={() => handleRemoveProduct(index)}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                  >
-                    Remove
-                  </button>
+                  </div>
+                  <div className="flex items-center justify-between w-full sm:w-1/3 sm:justify-end">
+                    <span className="mr-4">
+                      Harga satuan: Rp{product ? product.price : "N/A"}
+                    </span>
+                    <button
+                      onClick={() => handleRemoveProduct(index)}
+                      className="p-1"
+                    >
+                      <svg
+                        clipRule="evenodd"
+                        fillRule="evenodd"
+                        strokeLinejoin="round"
+                        strokeMiterlimit="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="red"
+                      >
+                        <path
+                          d="m4.015 5.494h-.253c-.413 0-.747-.335-.747-.747s.334-.747.747-.747h5.253v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-.254v15.435c0 .591-.448 1.071-1 1.071-2.873 0-11.127 0-14 0-.552 0-1-.48-1-1.071zm14.5 0h-13v15.006h13zm-4.25 2.506c-.414 0-.75.336-.75.75v8.5c0 .414.336.75.75.75s.75-.336.75-.75v-8.5c0-.414-.336-.75-.75-.75zm-4.5 0c-.414 0-.75.336-.75.75v8.5c0 .414.336.75.75.75s.75-.336.75-.75v-8.5c0-.414-.336-.75-.75-.75zm3.75-4v-.5h-3v.5z"
+                          fillRule="nonzero"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </li>
               );
             })}
           </ul>
         )}
         <h2 className="mt-5 text-xl font-bold">
-          Total Price: ${totalPrice.toFixed(2)}
+          Total Price: Rp{totalPrice.toFixed(2)}
         </h2>
-        <div>
-          <Link href="/components/Checkout">Checkout</Link>
+        <div className="mt-4">
+          <Link
+            href="/components/Checkout"
+            className="bg-blue-500 text-white px-4 py-2 rounded inline-block"
+          >
+            Checkout
+          </Link>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
