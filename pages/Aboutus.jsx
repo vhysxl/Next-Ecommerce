@@ -27,19 +27,21 @@ export default function Aboutus() {
           <h1 className="text-3xl font-bold mb-4">Tentang Kami</h1>
           <div className=" md:w-3/4 pb-32 lg:w-2/4 mx-auto">
             <p className="text-lg text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod
-              malesuada. Nullam ac erat ante. Proin viverra et magna et
-              facilisis. Suspendisse potenti. Phasellus eu justo quis elit
-              tincidunt facilisis. Nulla facilisi. Curabitur convallis interdum
-              sem, non vehicula orci fermentum in. Sed nec dapibus eros. Duis
-              efficitur, risus ut facilisis auctor, nunc turpis elementum
-              ligula, eget tempor urna arcu in nunc.
+              Usaha Baru adalah perusahaan yang bergerak di bidang penyediaan
+              jasa pembuatan rolling door dan folding gate. Perusahaan ini
+              didirikan pada tahun 2007 dan setahun kemudian, pindah ke daerah
+              Mustika Jaya. Selama bertahun-tahun, perusahaan ini terus
+              menyediakan jasa pembuatan rolling door dan folding gate hingga
+              tahun 2020. Pada tahun tersebut, Usaha Baru memutuskan untuk
+              memperluas layanan mereka dengan menjual aksesori yang diperlukan
+              untuk pembuatan folding gate dan rolling door. Sejak saat itu,
+              perusahaan perlahan-lahan mengurangi fokus pada jasa pembuatan dan
+              beralih ke penjualan aksesori.
             </p>
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

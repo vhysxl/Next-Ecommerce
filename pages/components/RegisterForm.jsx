@@ -32,11 +32,7 @@ export default function RegisterForm() {
       if (res.ok) {
         const form = e.target;
         form.reset();
-        setSuccess("Registrasi Sukses"); // Set success state to true
-        setTimeout(() => {
-          setSuccess(false); // Hide success message after 3 seconds
-          router.push("/");
-        }, 3000); // Adjust the delay as needed
+        setSuccess("Registrasi Sukses Silakan Login"); // Set success state to true
       } else {
         const data = await res.json();
         if (data.message === "Email already in use.") {

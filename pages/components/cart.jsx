@@ -180,7 +180,7 @@ export default function CheckoutPage() {
     return (
       <div className="flex items-center justify-center p-12 text-black text-2xl text-center bg-white">
         <div>
-          <h1>Memuat Order</h1>
+          <h1>Memuat Cart</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -200,7 +200,15 @@ export default function CheckoutPage() {
   }
 
   if (!session) {
-    return <div>Please log in to proceed to checkout.</div>;
+    return(
+      <div className="overflow-hidden">
+        <Navbar/>
+        <div className="bg-white min-h-screen flex flex-row text-black text-center justify-center items-center"> 
+          <h1 className="text-2xl">Tolong login terlebih dahulu untuk melihat cart</h1>
+        </div>
+        <Footer/>
+      </div>
+    )
   }
 
   return (

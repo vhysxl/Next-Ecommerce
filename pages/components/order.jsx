@@ -21,7 +21,11 @@ export default function Myorder() {
           const data = await response.json();
 
           if (response.ok) {
-            setOrders(data);
+            // Sort orders by createdAt in descending order
+            const sortedOrders = data.sort(
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            setOrders(sortedOrders);
           } else {
             setError(data.error);
           }
@@ -57,21 +61,32 @@ export default function Myorder() {
   }, []);
 
   if (isLoading || !productsLoaded) {
-    return <div>Loading...</div>; // Display loading message until both orders and products are loaded
+    return (
+      <div className="flex items-center justify-center p-12 text-black text-2xl text-center bg-white">
+        <div>
+          <h1>Memuat Order</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            className="mx-auto mt-4 animate-spin" // Center the SVG and add some margin-top
+          >
+            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm8 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-19 0c0-6.065 4.935-11 11-11v2c-4.962 0-9 4.038-9 9 0 2.481 1.009 4.731 2.639 6.361l-1.414 1.414.015.014c-2-1.994-3.24-4.749-3.24-7.789z" />
+          </svg>
+        </div>
+      </div>
+    ); // Display loading message until both orders and products are loaded
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  if (!session) {
-    return <div>Please log in to view your orders.</div>;
-  }
-
   return (
     <div className="overflow-hidden bg-white">
       <Navbar />
-      <div className="container mx-auto py-8  text-black over">
+      <div className="container mx-auto py-8 text-black over">
         <h1 className="text-2xl font-bold mb-4">My Orders</h1>
         {orders.length === 0 && <p>You have no orders.</p>}
         {orders.length > 0 && (
@@ -136,7 +151,6 @@ export default function Myorder() {
       <div className="bg-black">
         <Footer />
       </div>
-      
     </div>
   );
 }

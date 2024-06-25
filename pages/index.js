@@ -13,14 +13,10 @@ export default function Home() {
 
   if (!session) {
     return (
-      <div className="bg-white min-h-screen flex flex-col">
-        <header>
-          <Navbar />
-        </header>
-          <Hero/>
-        <footer className="w-screen bg-black">
-          <Footer/>
-        </footer>
+      <div className="z-100 overflow-hidden">
+        <Navbar />
+        <Hero />
+        <Footer />
       </div>
     );
   }
