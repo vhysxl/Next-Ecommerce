@@ -13,7 +13,11 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
         try {
+            // Create the order
             const newOrder = new Order({
                 consumentId,
                 items,
@@ -21,11 +25,30 @@ export default async function handler(req, res) {
                 totalPrice,
             });
 
-            await newOrder.save();
+            await newOrder.save({ session });
+
+            // Update product stock
+            for (const item of items) {
+                const product = await Product.findById(item.product).session(session);
+                if (!product) {
+                    throw new Error(`Product not found: ${item.product}`);
+                }
+                if (product.stock < item.quantity) {
+                    throw new Error(`Mohon maaf stock produk habis, tolong kurangi quantity atau ganti produk`);
+                }
+                product.stock -= item.quantity;
+                await product.save({ session });
+            }
+
+            await session.commitTransaction();
+            session.endSession();
+
             return res.status(201).json({ message: "Order placed successfully" });
         } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
             console.error("Error creating order:", error);
-            return res.status(500).json({ error: "Internal server error" });
+            return res.status(500).json({ error: error.message || "Internal server error" });
         }
     } else if (req.method === 'GET') {
         const { consumentId } = req.query;

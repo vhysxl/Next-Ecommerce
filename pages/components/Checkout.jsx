@@ -105,10 +105,15 @@ export default function CheckoutPage() {
       });
 
       if (response.ok) {
+        setCart({ ...cart, items: [] });
         router.push("/OrderSuccess");
       } else {
         const errorData = await response.json();
-        setError(errorData.error);
+        if (errorData.error.includes("stock produk habis")) {
+          alert(errorData.error);
+        } else {
+          setError(errorData.error);
+        }
       }
     } catch (error) {
       setError("Failed to place order");
@@ -208,9 +213,7 @@ export default function CheckoutPage() {
             Buat Order
           </button>
           <div className="border-2 my-2 px-2 py-2">
-            <h1 className="font-bold">
-              INFO:
-            </h1>
+            <h1 className="font-bold">INFO:</h1>
             <span>
               Semua pengiriman daerah jabodetabek gratis ongkir, Apabila
               pengiriman keluar jabodetabek harap hubungi kami di whatsapp

@@ -1,6 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import Consument from "@/models/consuments";
-import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -12,9 +11,6 @@ export default async function handler(req, res) {
                 return res.status(400).json({ message: "All fields are required." });
             }
 
-            // Hash the password
-            const hashedPassword = await bcrypt.hash(password, 10);
-
             // Connect to MongoDB
             await mongooseConnect();
 
@@ -25,7 +21,7 @@ export default async function handler(req, res) {
             }
 
             // Create the new user
-            await Consument.create({ name, email, password: hashedPassword });
+            await Consument.create({ name, email, password });
 
             return res.status(201).json({ message: "User Registered." });
         } catch (error) {

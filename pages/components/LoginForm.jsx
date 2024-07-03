@@ -42,6 +42,15 @@ export default function LoginForm() {
             type="password"
             placeholder="password"
           />
+          <div className="text-black">
+            Lupa password?{" "}
+            <Link
+              className="text-blue-600 underline"
+              href="https://wa.me/+62085282338904"
+            >
+              Hubungi admin
+            </Link>
+          </div>
           {error && (
             <div className="p-2 bg-red-600 w-fit rounded-sm mx-auto">
               {error}

@@ -20,15 +20,12 @@ export default function OrderSuccess() {
               Order kamu telah{" "}
               <span className="text-green-500 font-bold">sukses</span> Silakan
               lakukan pembayaran berupa transfer ke rekening BCA berikut sesuai
-              dengan total Harga, Lalu kirimkan bukti pembayaran ke whatsapp
-              kami untuk di verifikasi admin. Terima Kasih
+              dengan total Harga, Lalu kirimkan bukti pembayaran beserta order
+              ID ke whatsapp kami untuk di verifikasi admin. Terima Kasih
             </h1>
           </div>
           <div className="md:w-2/4 border-4 p-4 m-2">
-            <h1 className="text-2xl">
-              No Rek : ----
-              Atas Nama : ----
-            </h1>
+            <h1 className="text-2xl">No Rek : ---- Atas Nama : ----</h1>
           </div>
           <div>
             <button
@@ -40,7 +37,7 @@ export default function OrderSuccess() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function UserInfo() {
   }
 
   if (!session) {
-    return <div>Please sign in to view your profile.</div>;
+    return <div>Tolong Login untuk melihat user anda</div>;
   }
 
   const { user } = session;

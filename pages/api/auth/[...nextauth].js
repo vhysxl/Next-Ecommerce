@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { mongooseConnect } from '@/lib/mongoose';
 import Consument from '@/models/consuments';
-import bcrypt from 'bcryptjs';
 
 export default NextAuth({
   session: {
@@ -24,9 +23,7 @@ export default NextAuth({
           throw new Error('User tidak ditemukan');
         }
 
-        const isValidPassword = await bcrypt.compare(password, user.password);
-
-        if (!isValidPassword) {
+        if (password !== user.password) {
           throw new Error('Password Salah');
         }
 
@@ -49,5 +46,5 @@ export default NextAuth({
       return session;
     },
   },
-  
+
 });

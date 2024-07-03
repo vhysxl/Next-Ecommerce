@@ -13,7 +13,6 @@ export default function Catalog() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
       try {
@@ -61,11 +60,17 @@ export default function Catalog() {
   }, [cart]);
 
   const cartHandle = async (product) => {
-    router.refresh();
-    console.log(product._id);
-    console.log(session.user._id);
     if (!session || !session.user) {
       console.error("User not authenticated");
+      router.push("/Login")
+      return;
+    }
+
+    console.log(product._id);
+    console.log(session.user._id);
+
+    if (product.stock <= 0) {
+      console.error("Product out of stock");
       return;
     }
 
@@ -78,10 +83,11 @@ export default function Catalog() {
         body: JSON.stringify({
           consumentId: session.user._id,
           productId: product._id,
-          action: "add", // Add this line
+          action: "add",
         }),
+        
       });
-
+      router.refresh();
       if (!response.ok) {
         let errorResponse;
         try {
@@ -154,25 +160,32 @@ export default function Catalog() {
                     </h2>
                   </Link>
                   <p className="text-gray-800 font-semibold mb-4">
-                    Price: Rp{product.price}
+                    Rp {product.price}
                   </p>
                   <div className="flex relative">
-                    <button
-                      onClick={() => cartHandle(product)}
-                      className="pl-2 pt-2 rounded-md font-bold text-white flex flex-row gap-2 bg-black w-fit"
-                    >
-                      Tambah
-                      <svg
-                        width="36"
-                        height="36"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        fill="white"
+                    {product.stock > 0 ? (
+                      <button
+                        onClick={() => cartHandle(product)}
+                        className="pl-2 pt-2 rounded-md font-bold text-white flex flex-row gap-2 bg-black w-fit"
                       >
-                        <path d="M13.5 21c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m-6 2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m16.5-16h-2.964l-3.642 15h-13.321l-4.073-13.003h19.522l.728-2.997h3.75v1zm-22.581 2.997l3.393 11.003h11.794l2.674-11.003h-17.861z" />
-                      </svg>
-                    </button>
+                        Tambah
+                        <svg
+                          width="36"
+                          height="36"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          fill="white"
+                        >
+                          <path d="M13.5 21c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m-6 2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5m0-2c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5m16.5-16h-2.964l-3.642 15h-13.321l-4.073-13.003h19.522l.728-2.997h3.75v1zm-22.581 2.997l3.393 11.003h11.794l2.674-11.003h-17.861z" />
+                        </svg>
+                        
+                      </button>
+                    ) : (
+                      <p className="text-red-500 font-bold">
+                        Maaf produk habis
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

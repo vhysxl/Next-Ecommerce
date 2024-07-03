@@ -84,23 +84,46 @@ export default function CheckoutPage() {
     }));
   };
 
-  const handleQuantityChange = (index, quantity) => {
+  const handleQuantityChange = async (index, quantity) => {
     if (quantity < 1) return;
 
     const updatedCart = { ...cart };
     updatedCart.items[index].quantity = quantity;
 
-    setCart(updatedCart);
+    try {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          consumentId: session.user._id,
+          productId: cart.items[index].product,
+          action: "update",
+          quantity: quantity,
+        }),
+      });
 
-    const calculateTotalPrice = () => {
-      const total = updatedCart.items.reduce((acc, item) => {
-        const product = products.find((p) => p._id === item.product);
-        return acc + (product ? product.price * item.quantity : 0);
-      }, 0);
-      setTotalPrice(total);
-    };
+      if (response.ok) {
+        const updatedCartData = await response.json();
+        setCart(updatedCartData);
 
-    calculateTotalPrice();
+        const calculateTotalPrice = () => {
+          const total = updatedCartData.items.reduce((acc, item) => {
+            const product = products.find((p) => p._id === item.product);
+            return acc + (product ? product.price * item.quantity : 0);
+          }, 0);
+          setTotalPrice(total);
+        };
+
+        calculateTotalPrice();
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error);
+      }
+    } catch (error) {
+      setError("Failed to update cart");
+    }
   };
 
   const handleRemoveProduct = async (index) => {
@@ -200,23 +223,25 @@ export default function CheckoutPage() {
   }
 
   if (!session) {
-    return(
+    return (
       <div className="overflow-hidden">
-        <Navbar/>
-        <div className="bg-white min-h-screen flex flex-row text-black text-center justify-center items-center"> 
-          <h1 className="text-2xl">Tolong login terlebih dahulu untuk melihat cart</h1>
+        <Navbar />
+        <div className="bg-white min-h-screen flex flex-row text-black text-center justify-center items-center">
+          <h1 className="text-2xl">
+            Tolong login terlebih dahulu untuk melihat cart
+          </h1>
         </div>
-        <Footer/>
+        <Footer />
       </div>
-    )
+    );
   }
 
   return (
     <>
-    <div className="overflow-hidden">
-      <Navbar />
-    </div>
-      
+      <div className="overflow-hidden">
+        <Navbar />
+      </div>
+
       <div className="p-5 font-sans bg-white text-black">
         <h1 className="text-2xl mb-5">Cart</h1>
         {cart && cart.items.length === 0 && <p>Cart anda kosong</p>}
@@ -296,7 +321,7 @@ export default function CheckoutPage() {
           </Link>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

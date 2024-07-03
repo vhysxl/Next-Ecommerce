@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     await mongooseConnect();
 
     if (req.method === "POST") {
-        const { consumentId, productId, action } = req.body;
+        const { consumentId, productId, action, quantity } = req.body;
 
         if (!consumentId || !productId) {
             return res.status(400).json({ error: "Missing consumentId or productId" });
@@ -15,7 +15,6 @@ export default async function handler(req, res) {
         try {
             let cart = await Cart.findOne({ consument: new mongoose.Types.ObjectId(consumentId) });
 
-            // If no cart exists, create a new one
             if (!cart) {
                 cart = new Cart({ consument: new mongoose.Types.ObjectId(consumentId), items: [] });
             }
@@ -33,6 +32,12 @@ export default async function handler(req, res) {
             } else if (action === "remove") {
                 if (existingItemIndex > -1) {
                     cart.items.splice(existingItemIndex, 1);
+                }
+            } else if (action === "update") {
+                if (existingItemIndex > -1) {
+                    cart.items[existingItemIndex].quantity = quantity;
+                } else {
+                    cart.items.push({ product: new mongoose.Types.ObjectId(productId), quantity: quantity });
                 }
             }
 
