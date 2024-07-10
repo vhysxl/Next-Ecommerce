@@ -18,6 +18,10 @@ export default function CheckoutPage() {
   const [error, setError] = useState(null);
   const router = useRouter();
 
+  const buttonCart = () => {
+    router.push("/Product");
+  };
+
   useEffect(() => {
     const fetchCart = async () => {
       if (status === "authenticated") {
@@ -219,7 +223,23 @@ export default function CheckoutPage() {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="overflow-hidden">
+        <Navbar />
+        <div className="bg-white min-h-screen flex flex-col text-black text-center justify-center items-center">
+          <h1 className="text-2xl">
+            Cart anda masih kosong silakan mulai belanja
+          </h1>
+          <button
+            className="text-white bg-blue-600 py-2 px-4 text-2xl mt-4 rounded-md border-stone-950 border-2 active:bg-blue-900"
+            onClick={buttonCart}
+          >
+            Belanja
+          </button>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   if (!session) {

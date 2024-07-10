@@ -10,10 +10,13 @@ const orderSchema = new mongoose.Schema({
     ],
     shippingAddress: {
         name: { type: String, required: true },
-        address: { type: String, required: true }
+        address: { type: String, required: true },
+        notelp: {type: String, required: true},
+        domisili: {type: String, required: true}
     },
     totalPrice: { type: Number, required: true },
     createdAt: { type: Date, default: Date.now },
+    status: {type: String, default: "Menunggu Pembayaran"}
 });
 
 const Order = models.Order || mongoose.model('Order', orderSchema);

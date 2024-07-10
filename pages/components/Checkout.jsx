@@ -10,6 +10,8 @@ export default function CheckoutPage() {
   const [shippingAddress, setShippingAddress] = useState({
     name: "",
     address: "",
+    notelp: "",
+    domisili: ""
   });
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +44,7 @@ export default function CheckoutPage() {
 
     fetchCart();
   }, [session, status]);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -82,6 +85,7 @@ export default function CheckoutPage() {
     }));
   };
 
+  console.log(session);
   const handlePlaceOrder = async () => {
     if (!shippingAddress.name || !shippingAddress.address) {
       alert("Tolong Isi semua data terlebih dahulu");

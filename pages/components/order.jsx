@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Router, { useRouter } from "next/router";
 
 export default function Myorder() {
   const { data: session, status } = useSession();
@@ -10,6 +11,12 @@ export default function Myorder() {
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
+  const router = useRouter();
+
+
+  const buttonCart = () => {
+    router.push("/Product");
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -80,7 +87,23 @@ export default function Myorder() {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="overflow-hidden">
+        <Navbar />
+        <div className="bg-white min-h-screen flex flex-col text-black text-center justify-center items-center">
+          <h1 className="text-2xl">
+            Whoops order anda masih kosong, silakan mulai pesan untuk melihat order
+          </h1>
+          <button
+            className="text-white bg-blue-600 py-2 px-4 text-2xl mt-4 rounded-md border-stone-950 border-2 active:bg-blue-900"
+            onClick={buttonCart}
+          >
+            Pesan Sekarang
+          </button>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   return (

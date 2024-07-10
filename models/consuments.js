@@ -4,9 +4,11 @@ const ConsumentSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  
+  notelp: { type: String, required: true },
+  alamat: { type: String, required: true },
+  domisili: { type: String, required: true },
 },
-{timestamps: true}
+  { timestamps: true }
 );
 
 const Consument = models.Consument || model('Consument', ConsumentSchema);

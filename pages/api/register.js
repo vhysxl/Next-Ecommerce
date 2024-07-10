@@ -4,10 +4,10 @@ import Consument from "@/models/consuments";
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const { name, email, password } = req.body;
+            const { name, email, password, notelp, alamat, domisili } = req.body;
 
             // Ensure all fields are provided
-            if (!name || !email || !password) {
+            if (!name || !email || !password || !notelp || !alamat || !domisili) {
                 return res.status(400).json({ message: "All fields are required." });
             }
 
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             }
 
             // Create the new user
-            await Consument.create({ name, email, password });
+            await Consument.create({ name, email, password, notelp, alamat, domisili });
 
             return res.status(201).json({ message: "User Registered." });
         } catch (error) {
