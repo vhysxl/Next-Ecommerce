@@ -116,8 +116,8 @@ export default function RegisterForm() {
             <option value="Luar Jabodetabek">Luar Jabodetabek</option>
           </select>
           <label className="text-black text-sm">
-            Apabila diluar Jabodetabek pilih{" "}
-            <span className="text-green-600">"Luar Jabodetabek"</span>
+            Apabila diluar Jabodetabek pilih
+            <span className="text-green-600">Luar Jabodetabek</span>
           </label>
           {success && (
             <div className="p-2 bg-green-500 w-fit rounded-sm mx-auto">
