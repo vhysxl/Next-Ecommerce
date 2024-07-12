@@ -90,8 +90,8 @@ export default function Myorder() {
         return "text-green-500";
       case "diproses":
         return "text-blue-500";
-      case "dibatalkan":
-        return "text-red-500";
+      case "dalam perjalanan":
+        return "text-blue-500";
       default:
         return "text-black";
     }
