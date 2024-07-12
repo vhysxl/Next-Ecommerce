@@ -13,7 +13,6 @@ export default function Myorder() {
   const [productsLoaded, setProductsLoaded] = useState(false);
   const router = useRouter();
 
-
   const buttonCart = () => {
     router.push("/Product");
   };
@@ -28,7 +27,6 @@ export default function Myorder() {
           const data = await response.json();
 
           if (response.ok) {
-            // Sort orders by createdAt in descending order
             const sortedOrders = data.sort(
               (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
             );
@@ -58,7 +56,7 @@ export default function Myorder() {
         }
         const productsData = await productsRes.json();
         setProducts(productsData);
-        setProductsLoaded(true); // Set productsLoaded to true when products are fetched
+        setProductsLoaded(true);
       } catch (error) {
         setError("Error fetching products");
       }
@@ -66,6 +64,38 @@ export default function Myorder() {
 
     fetchProducts();
   }, []);
+
+  const getBiayaPengiriman = (domisili) => {
+    switch (domisili) {
+      case "Jakarta":
+        return 15000;
+      case "Bogor":
+        return 30000;
+      case "Depok":
+        return 20000;
+      case "Tangerang":
+        return 25000;
+      case "Bekasi":
+        return 10000;
+      default:
+        return 20000;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case "menunggu pembayaran":
+        return "text-yellow-500";
+      case "terkirim":
+        return "text-green-500";
+      case "diproses":
+        return "text-blue-500";
+      case "dibatalkan":
+        return "text-red-500";
+      default:
+        return "text-black";
+    }
+  };
 
   if (isLoading || !productsLoaded) {
     return (
@@ -77,13 +107,13 @@ export default function Myorder() {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className="mx-auto mt-4 animate-spin" // Center the SVG and add some margin-top
+            className="mx-auto mt-4 animate-spin"
           >
             <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm8 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-19 0c0-6.065 4.935-11 11-11v2c-4.962 0-9 4.038-9 9 0 2.481 1.009 4.731 2.639 6.361l-1.414 1.414.015.014c-2-1.994-3.24-4.749-3.24-7.789z" />
           </svg>
         </div>
       </div>
-    ); // Display loading message until both orders and products are loaded
+    );
   }
 
   if (error) {
@@ -92,7 +122,8 @@ export default function Myorder() {
         <Navbar />
         <div className="bg-white min-h-screen flex flex-col text-black text-center justify-center items-center">
           <h1 className="text-2xl">
-            Whoops order anda masih kosong, silakan mulai pesan untuk melihat order
+            Whoops order anda masih kosong, silakan mulai pesan untuk melihat
+            order
           </h1>
           <button
             className="text-white bg-blue-600 py-2 px-4 text-2xl mt-4 rounded-md border-stone-950 border-2 active:bg-blue-900"
@@ -119,7 +150,15 @@ export default function Myorder() {
                 key={order._id}
                 className="bg-white shadow-md rounded-md p-4 mb-4 border-2"
               >
-                <h2 className="text-xl font-bold mb-2">Order #{order._id}</h2>
+                <h2 className="text-xl font-bold mb-2">
+                  Order ID: {order._id}
+                </h2>
+                <h3
+                  className={`text-xl font-bold mb-2 ${getStatusColor(order.status)}`}
+                >
+                  {order.status}
+                </h3>
+
                 <p className="mb-2">
                   <strong>Date:</strong>{" "}
                   {new Date(order.createdAt).toLocaleDateString()}
@@ -164,7 +203,15 @@ export default function Myorder() {
                 </ul>
                 <p className="mt-3">
                   <strong>Shipping Address:</strong>{" "}
-                  {order.shippingAddress.name}, {order.shippingAddress.address}
+                  {order.shippingAddress.name}, {order.shippingAddress.address},{" "}
+                  {order.shippingAddress.domisili}
+                </p>
+                <p className="mt-3">
+                  <strong>Biaya Pengiriman: </strong>
+                  Rp
+                  {getBiayaPengiriman(
+                    order.shippingAddress.domisili
+                  ).toLocaleString()}
                 </p>
               </li>
             ))}

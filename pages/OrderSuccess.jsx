@@ -9,6 +9,10 @@ export default function OrderSuccess() {
     router.push("/");
   };
 
+  const handleCekOrder = () => {
+    router.push("/components/order")
+  }
+
   return (
     <div className="overflow-hidden">
       <Navbar />
@@ -29,10 +33,16 @@ export default function OrderSuccess() {
           </div>
           <div>
             <button
-              className="bg-green-500 border-2 rounded-md h-fit m-4 p-4 border-black text-2xl text-white"
+              className="bg-green-500 border-2 rounded-md h-fit m-4 p-4 border-black text-2xl text-white active:bg-green-900"
               onClick={handleOk}
             >
               Kembali
+            </button>
+            <button
+              className="bg-blue-500 border-2 rounded-md h-fit m-4 p-4 border-black text-2xl text-white active:to-blue-900"
+              onClick={handleCekOrder}
+            >
+              Cek Order
             </button>
           </div>
         </div>
