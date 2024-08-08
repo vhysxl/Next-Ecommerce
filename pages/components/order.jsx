@@ -25,7 +25,7 @@ export default function Myorder() {
             `/api/order?consumentId=${session.user._id}`
           );
           const data = await response.json();
-
+          console.log(data)
           if (response.ok) {
             const sortedOrders = data.sort(
               (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -154,17 +154,19 @@ export default function Myorder() {
                   Order ID: {order._id}
                 </h2>
                 <h3
-                  className={`text-xl font-bold mb-2 ${getStatusColor(order.status)}`}
+                  className={`text-xl font-bold mb-2 ${getStatusColor(
+                    order.status
+                  )}`}
                 >
                   {order.status}
                 </h3>
 
                 <p className="mb-2">
-                  <strong>Date:</strong>{" "}
+                  <strong>Tanggal:</strong>{" "}
                   {new Date(order.createdAt).toLocaleDateString()}
                 </p>
                 <p className="mb-2">
-                  <strong>Total Price:</strong> Rp{order.totalPrice.toFixed(2)}
+                  <strong>Total Harga:</strong> Rp{order.totalPrice.toFixed(2)}
                 </p>
                 <h3 className="text-lg font-bold mb-2">Items:</h3>
                 <ul className="list-disc pl-4">
@@ -194,7 +196,7 @@ export default function Myorder() {
                             Quantity: {item.quantity}
                           </span>
                           <span>
-                            Price: Rp{product ? product.price : "N/A"}
+                            Harga: Rp{product ? product.price : "N/A"}
                           </span>
                         </div>
                       </li>
@@ -202,9 +204,13 @@ export default function Myorder() {
                   })}
                 </ul>
                 <p className="mt-3">
-                  <strong>Shipping Address:</strong>{" "}
+                  <strong>Alamat:</strong>{" "}
                   {order.shippingAddress.name}, {order.shippingAddress.address},{" "}
                   {order.shippingAddress.domisili}
+                </p>
+                <p className="mt-3">
+                  <strong>Kontak Buyer:</strong>{" "}
+                  {order.shippingAddress.notelp}
                 </p>
                 <p className="mt-3">
                   <strong>Biaya Pengiriman: </strong>

@@ -14,6 +14,7 @@ export default function CheckoutPage() {
     domisili: "",
   });
   const [totalPrice, setTotalPrice] = useState(0);
+  const [newTotalPrice, setNewTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [alamat, setNewalamat] = useState(false);
@@ -123,6 +124,54 @@ export default function CheckoutPage() {
     }));
   };
 
+  const ongkirNew = () => {
+    let domisiliNew = shippingAddress.domisili;
+    if (domisiliNew === "Bekasi") {
+      return 10000;
+    } else if (domisiliNew === "Jakarta") {
+      return 15000;
+    } else if (domisiliNew === "Bogor") {
+      return 30000;
+    } else if (domisiliNew === "Depok") {
+      return 20000;
+    } else if (domisiliNew === "Tangerang") {
+      return 25000;
+    } else {
+      return 0;
+    }
+  };
+
+  useEffect(() => {
+    if (cart && products.length > 0) {
+      const calculateTotalPriceNew = () => {
+        const subtotal = cart.items.reduce((acc, item) => {
+          const product = products.find((p) => p._id === item.product);
+          return acc + (product ? product.price * item.quantity : 0);
+        }, 0);
+        const ongkirNewCalc = () => {
+          let domisiliNew = shippingAddress.domisili;
+          if (domisiliNew === "Bekasi") {
+            return 10000;
+          } else if (domisiliNew === "Jakarta") {
+            return 15000;
+          } else if (domisiliNew === "Bogor") {
+            return 30000;
+          } else if (domisiliNew === "Depok") {
+            return 20000;
+          } else if (domisiliNew === "Tangerang") {
+            return 25000;
+          } else {
+            return 0;
+          }
+        };
+        const total = subtotal + ongkirNewCalc();
+        setNewTotalPrice(total);
+      };
+
+      calculateTotalPriceNew();
+    }
+  }, [cart, products]);
+
   console.log(session);
   const handlePlaceOrderFixed = async () => {
     const order = {
@@ -163,13 +212,14 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrderNew = async () => {
+    // Check if all required fields are filled
     if (
       !shippingAddress.name ||
       !shippingAddress.address ||
       !shippingAddress.notelp ||
       !shippingAddress.domisili
     ) {
-      alert("Tolong Isi semua data terlebih dahulu");
+      alert("Please fill in all the required shipping address fields.");
       return;
     }
 
@@ -177,7 +227,7 @@ export default function CheckoutPage() {
       consumentId: session.user._id,
       items: cart.items,
       shippingAddress,
-      totalPrice,
+      totalPrice : newTotalPrice,
     };
 
     try {
@@ -416,15 +466,15 @@ export default function CheckoutPage() {
                   <span>
                     Biaya pengiriman ke{" "}
                     <span className="text-blue-500">
-                      {session.user.domisili}
+                      {shippingAddress.domisili}
                     </span>
                   </span>
-                  <span>Harga: Rp{ongkir()}</span>
+                  <span>Harga: Rp{ongkirNew()}</span>
                 </li>
               </ul>
             )}
             <h2 className="mt-5 text-xl font-bold">
-              Total Harga: Rp{totalPrice.toFixed(2)}
+              Total Harga: Rp{newTotalPrice.toFixed(2)}
             </h2>
             <button
               onClick={handlePlaceOrderNew}
