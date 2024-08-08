@@ -29,7 +29,7 @@ export default function OrderSuccess() {
             </h1>
           </div>
           <div className="md:w-2/4 border-4 p-4 m-2">
-            <h1 className="text-2xl">No Rek : ---- Atas Nama : ----</h1>
+            <h1 className="text-2xl">No Rek : 5734982160 Atas Nama : Dirin</h1>
           </div>
           <div>
             <button
